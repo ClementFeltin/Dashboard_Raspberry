@@ -1,0 +1,1 @@
+Lit mesures de capteur de température CPU depuis base de données SQLITE et affiche avec Dash
