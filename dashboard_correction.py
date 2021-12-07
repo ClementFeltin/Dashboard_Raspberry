@@ -17,9 +17,9 @@ pd.options.plotting.backend = "plotly"
 external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
 
 # Connexion à la base de données
-db_path = '.db' # à compléter
+db_path = './sensorsData.db'
 conn = sqlite3.connect(db_path)
-table_name = '' # à compléter
+table_name = 'Raspberry_data'
 
 # lecture des données de la base sous la forme d'un DataFrame Pandas
 df = pd.read_sql_query(f"SELECT * FROM {table_name} ;", conn)
@@ -31,7 +31,6 @@ max_date = df.index.max()
 
 # génération d'un tableau html à partir des données 
 def generate_table(dataframe, max_rows=10):
-    # à compléter : réécrire avec la méthode .to_html() de Pandas
     return html.Table(
         # Header
         [html.Tr([html.Th(col) for col in dataframe.columns])] +
@@ -65,10 +64,12 @@ app.layout = html.Div(children=[
         dcc.Tab(label='Scatter plot', children=[
             dcc.Graph(
                     id='scatter_plot',
-                    figure=df.plot() # à compléter : réalisez un scatter plot avec l'argument "kind" de plotly express
+                    figure=df.plot(kind='scatter')
                 )
         ]),
-        # à compléter : rajouter un onglet de statistiques descriptives avec la methode .describe() de pandas
+        dcc.Tab(label='Summary', children=[
+            generate_table(df.describe())
+        ]),
     ]),
     
         # input

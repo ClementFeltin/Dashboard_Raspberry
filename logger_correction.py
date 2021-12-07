@@ -10,8 +10,8 @@ import psutil
 from gpiozero import CPUTemperature
 
 # connexion à la base de données
-db_name = '.db' # à compléter
-table_name =  # à compléter
+db_name = 'sensorsData.db'
+table_name = 'Raspberry_data'
 con = lite.connect(db_name)
 
 
@@ -26,12 +26,10 @@ def init_db(con):
         cur = con.cursor() 
         if not len(cur.fetchall()) > 0:
             cur.execute(f"DROP TABLE IF EXISTS {table_name}")
-
-             # à compléter
-            cur.execute(f"CREATE TABLE {table_name} (TTT DATETIME PRIMARY KEY, XXX NUMERIC, YYY NUMERIC, ZZZ NUMERIC)")
+            cur.execute(f"CREATE TABLE {table_name} (timestamp DATETIME PRIMARY KEY, cpu NUMERIC, ram NUMERIC, temp NUMERIC)")
 
 
-sampleFreq =  # fréquence d'échantillonnage
+sampleFreq = 1 * 60 # fréquence d'échantillonnage
 
 
 def getCPUtempdata():
@@ -44,7 +42,7 @@ def getCPUtempdata():
     temp = cpu.temperature
 
     if temp is not None:
-        temp = round(temp, ) # à compléter
+        temp = round(temp, 1)
     return temp
 
 
@@ -64,7 +62,7 @@ def getRAMpercent():
         float: pourcentage de charge
     """
     ram = psutil.virtual_memory() # renvoie un objet avec beaucoup d'attributs
-    return ram[] # à compléter
+    return ram[2]
 
 
 def logData (ram, cpu, temp):
