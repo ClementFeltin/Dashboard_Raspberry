@@ -1,1 +1,2 @@
-Lit mesures de capteur de température CPU depuis base de données SQLITE et affiche avec Dash
+Le fichier logger.py permet d'enregistrer la température du CPU, la charge CPU, et la RAM utilisée dans une base de donnée.
+Le fichier dashboard.py permet de visualiser ces données dans un dashboard Dash.
